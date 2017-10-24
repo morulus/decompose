@@ -1,4 +1,4 @@
-Decompose
+Decomposite
 ==
 
 -------
@@ -16,12 +16,12 @@ Provides an opportunity to plunge into logic decompositions, concatenative progr
 
 Install:
 ```shell
-yarn add decompose
+yarn add decomposite
 ```
 
 Usage:
 ```js
-import { flow } from 'decompose';
+import { composite } from 'decomposite';
 ```
 
 Theory
@@ -38,7 +38,7 @@ Decomposite logic is such logic, which was composed of smaller logics, which in 
 Imagine that you write the program as if writing plans for the day.
 
 ```js
-export default flow(
+export default composite(
   wakeUp,
   washUp,
   warmUp,
@@ -55,7 +55,7 @@ If we go to the source of any item, for example to `haveBreakfast`, then we will
 
 ```js
 // haveBreakfast.js
-export default flow(
+export default composite(
   cookScrambledEggs,
   squeezeOrangeJuice,
   setTheTable,
@@ -67,7 +67,7 @@ And `cookScrambledEggs` is:
 
 ```js
 // cookScrambledEggs.js
-export default flow(
+export default composite(
   preheatAPan,
   takeTheEggs,
   breakEggs,
@@ -88,11 +88,11 @@ The flow, sequencing function calls, chaining, stream - close concepts.  Imagine
 Let start with simple composition.
 
 ```js
-import { flow } from 'decompose';
+import { composite } from 'decomposite';
 
 const getHelloMessageByName = name => `Hello, ${name}!`;
 
-const logHello = flow(
+const logHello = composite(
   getHelloMessageByName,
   console.log
 );
@@ -106,7 +106,7 @@ In this example I just concatenates two functions. First function `getHelloMessa
 Let's abstract our eyes from the imperative logic and look at the composite function
 
 ```js
-const logHello = flow(
+const logHello = composite(
   getHelloMessageByName,
   console.log
 );
@@ -152,7 +152,7 @@ The logic of these functions is indivisible. It means that I can't decompose it 
 But now we can put it together and get code view more declarative.
 
 ```js
-import { flow } from 'decompose';
+import { composite } from 'decomposite';
 import {
   eventToValue,
   validate,
@@ -160,7 +160,7 @@ import {
 } from 'src/logic'
 
 // Concatenating
-export default flow(
+export default composite(
   eventToValue,         // Select value from event
   validate,             // Validate selected value
   notify,               // Notify if the value is invalid
@@ -197,7 +197,7 @@ _Stack_ is a collection of results of _words_ invokations. Each _word_ invocatio
 Look at example and follow comments to watch stack changes:
 
 ```js
-const randBool = flow(
+const randBool = composite(
   Math.PI, // In: [], Out: [3.14159]
   Math.round, // In: [3.14159], Out: [3]
   Boolean, // In: [3], Out: [true]
@@ -214,7 +214,7 @@ Why we need stack? - you asking me. Because significant limitation of the concat
 For example, I want to create a function for converting user input in to a cubed value. To get cubed value, I should to call `Math.pow` with second argument equals `3`.
 
 ```js
-const onChange = flow(
+const onChange = composite(
   Number,
   Math.pow, // By the default second parameter is 2, but we needs 3
   console.log,
@@ -232,7 +232,7 @@ __I. Encapsulation of call__
 Just create higher-level function, which call required function with needed arguments.
 
 ```js
-const onChange = flow(
+const onChange = composite(
   Number,
   n => Math.pow(n, 3),
   console.log,
@@ -247,7 +247,7 @@ In concatenative languages, there is such thing as **Stack effect**. It is when 
 Thus, the only way to increase stack length is to forcenatly increase stack. It can be done with passing to the concatenate sequence an array instead a function.
 
 ```js
-const onChange = flow(
+const onChange = composite(
   [3, Number],
   Math.pow,
   console.log,
@@ -269,7 +269,7 @@ __III. Use helpers__
 [mapArgs](docs/api.md#mapArgs) allows you force set arguments.
 
 ```js
-const getRandSquare = flow(
+const getRandSquare = composite(
   mapArgs((val) => [Number(val), 3]),
   Math.pow,
 )
@@ -287,7 +287,7 @@ When I accepts initial arguments, first thing I must to do is map this arguments
 Manually:
 
 ```js
-flow(
+composite(
   (a, b, c) => ({ a, b, c });
 )
 ```
@@ -295,7 +295,7 @@ flow(
 Or using special factory `zipProps`:
 
 ```js
-flow(
+composite(
   zipProps(['a', 'b', 'c']),
 )
 ```
@@ -313,7 +313,7 @@ const mapValidateCardNumber = ({ e }) => ({
   valid: e.target.value.length == 16,
 })
 
-const onCardNumberChange = flow(
+const onCardNumberChange = composite(
   zipProps('e'),
   mapValidateCardNumber,
   ({ e, valid }) => {

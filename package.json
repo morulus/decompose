@@ -1,7 +1,7 @@
 {
-  "name": "decompose",
+  "name": "decomposite",
   "version": "0.1.0",
-  "description": "More tools for functional decomposition",
+  "description": "Functional decomposition in action",
   "main": "lib/index.js",
   "scripts": {
     "test": "./node_modules/.bin/eslint src && ./node_modules/.bin/jest test.js",

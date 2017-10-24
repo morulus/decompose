@@ -4,11 +4,10 @@ import tillTruly from './tillTruly';
 import invoke from './invoke';
 import fork from './fork';
 
-const flow = concatenate;
-const f = concatenate;
+const composite = concatenate;
 
 export {
-  concatenate,
+  composite,
   flow,
   f,
   withProps,
@@ -17,4 +16,16 @@ export {
   fork,
 };
 
-export default flow;
+const main = (...args) => composite(...args);
+
+Object.assign(main, {
+  composite,
+  flow,
+  f,
+  withProps,
+  tillTruly,
+  invoke,
+  fork,
+});
+
+export default main;

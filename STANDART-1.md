@@ -1,7 +1,7 @@
-Standart COMPOSEFN-1
+Standart-1
 ==
 
-## 1.1.1 Any functions passed to `concatenate` will be invoked in a chain for getting value
+## 1.1.1 Any functions passed to `composite` will be invoked in a chain for getting value
 
 ## 1.1.1.1 Function call erases the stack, but add one value on return
 
@@ -29,7 +29,7 @@ _Args_: `['a', 'b', 'c']` to be _Stack_: `['c', 'b', 'a']`
 
 ## 1.1.6. An array will extends stack
 
-If you pass an array to the `concatenate` function, each of its keys will add a new value to the stack
+If you pass an array to the `composite` function, each of its keys will add a new value to the stack
 
 ## 1.1.6.2 Any functions stored in passed array will be executed in a series for getting value
 

@@ -4,7 +4,7 @@ Decompose API Reference
 # __0.1.0__
 
 * [Factory functions](#factory-functions)
-  + [`concatenate`](#concatenate) ([`flow`](#concatenate), [`f`](#concatenate))
+  + [`composite`](#composite) ([`concatenate`](#composite), [`f`](#composite))
   + [`tillTruly`](#tillTruly)
   + [`tillMatch`](#tillMatch)
   + [`branch`](#branch)
@@ -23,10 +23,10 @@ Factory functions can be used separately from the flow. You are free to use it w
 
 ## `default`
 
-**ref**: `concatenate()`, `flow()`, `f()`
+**ref**: `composite()`, `flow()`, `f()`
 
 ```
-concatenate(
+composite(
   ...units: (function | array | any)
 ) : function
 ```
@@ -34,7 +34,7 @@ concatenate(
 Compose functions into a flow, where the result of the previous function becomes an argument for a next.
 
 ```js
-const logSum = concatenate(
+const logSum = composite(
   (x, y) => x + y,
   sum => `Sum: ${sum}`,
   console.log
@@ -57,7 +57,7 @@ But you have the opportunity to increase the stack, thereby increasing the numbe
 Using an array, we can easily add additional data to the stack.
 
 ```js
-const logSum = concatenate(
+const logSum = composite(
   // Initial stack is [3, 2]. Formed from arguments.
   [
     'A', 'B', 'C', 'D'
@@ -78,7 +78,7 @@ To better understand the principle of the stack, imagine that the stack is a dec
 The larger the stack, the more arguments will be passed to the next function.
 
 ```js
-concatenate(
+composite(
   ['2', '4', '5', '6', '7', '8', '9', '10'],
   ['Jack', 'Queen', 'King', 'Ace'],
   (
@@ -104,7 +104,7 @@ concatenate(
 But, if the stream encounters a function, the stack is reset to zero and again takes on only one value.
 
 ```js
-concatenate(
+composite(
   ['2', '4', '5', '6', '7', '8', '9', '10'],
   ['Jack', 'Queen', 'King', 'Ace'],
   () => 'Joker',
@@ -117,7 +117,7 @@ concatenate(
 However, the use of functions inside the array does not result in the zeroing of the current stack. You can use this for parallel calculations.
 
 ```js
-const onKeyDown = concatenate(
+const onKeyDown = composite(
   [event => event.which === 13],
   (isEnter, event) => {
     if (isEnter) {
@@ -147,7 +147,7 @@ const validateValue = tillTruly(
   value => value.length > 20 && 'Value too big',
 );
 
-const onValueChange = concatenate(
+const onValueChange = composite(
   validateValue,
   (message) => (
     message
@@ -232,7 +232,7 @@ const resolveValidation = invoke((valid) => {
     : displayWarning;
 });
 
-const onFormSubmit = concatenate(
+const onFormSubmit = composite(
   [validateForm],
   resolveValidation,
 )
@@ -259,7 +259,7 @@ Accepts a list of keys according to the order of the arguments. The result becom
 Use it to map initial arguments to props, when the [props-only technique](../README.md#props-only-technique) you were chosen.
 
 ```js
-const setUserName = concatenate(
+const setUserName = composite(
   zipProps('firstName', 'lastName'),
   ({ firstName, lastName }) => {
     // Do something with props
@@ -276,7 +276,7 @@ setUserName('Vladimir', 'Morulus');
 Accepts function, that returns props, which will be merged with existing props.
 
 ```js
-const flow = concatenate(
+const flow = composite(
   a => ({
     a,
   }),
@@ -309,7 +309,7 @@ Helper is a util, which cannot be used separately from the concatenative flow. I
 Invoke function without any effect on the custom flow.
 
 ```js
-concatenate(
+composite(
   ['Hello'],
   fork(() => {
     return 'Bonjour';
@@ -326,7 +326,7 @@ concatenate(
 Allows you force set arguments.
 
 ```js
-const getSquare = concatenate
+const getSquare = composite(
   mapArgs((val) => [Number(val), 3]),
   Math.pow,
 )
@@ -343,7 +343,7 @@ Allows you to override the whole stack. Note that the order of array corresponds
 Add sync error handler. Allows you to continue the flow with a new value if current flow has thrown an error.
 
 ```js
-const flow = concatenate(
+const flow = composite(
   1,
   () => { throw new Error(); },
   () => 2, // Skip
@@ -364,7 +364,7 @@ flow(); // 5
 Define async handler, and optional catch handler. Expects Promise on the edge of stack.
 
 ```js
-concatenate(
+composite(
   Promise.resolve(2),
   then((payload) => {
     return payload * 2;
