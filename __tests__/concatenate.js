@@ -70,4 +70,18 @@ describe('concatenate', () => {
     test(mockEvent2);
     expect(mockEvent2.preventDefault).not.toHaveBeenCalled();
   });
+
+  it('Object unit', () => {
+    const test = concatenate({
+      a: a => a,
+      b: (a, b) => b,
+      c: (a, b, c) => c,
+    });
+
+    expect(test(1, 2, 3)).toMatchObject({
+      a: 1,
+      b: 2,
+      c: 3,
+    });
+  });
 });

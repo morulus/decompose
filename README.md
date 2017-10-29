@@ -1,4 +1,4 @@
-Decomposite
+decompose
 ==
 
 -------
@@ -9,19 +9,19 @@ I'm still working on the principle of this tool. It is likely that his behavior 
 
 -------
 
-Provides an opportunity to plunge into logic decompositions, concatenative programming, and composite functions in Javascript.
+Provides an opportunity to plunge into logic decompositions, concatenative programming, and sequence functions in Javascript.
 
 
 [**API reference**](docs/api.md) - Learn about all opportunities
 
 Install:
 ```shell
-yarn add decomposite
+yarn add decompose
 ```
 
 Usage:
 ```js
-import { composite } from 'decomposite';
+import { sequence } from 'decompose';
 ```
 
 Theory
@@ -33,12 +33,12 @@ If the functional paradigm is designed to encapsulate complex logic, then reacti
 
 The goal is to make the code more intuitive, and the analysis easy. The oldest way to reduce complexity is to decompose.
 
-Decomposite logic is such logic, which was composed of smaller logics, which in turn composed of even smaller ones. Representation of such decomposition looks fine with describing the lifecycle of the subroutine as a sequence of actions. At in the concatenative paradigm, the juxtaposition of expressions denotes function composition.
+decompose logic is such logic, which was composed of smaller logics, which in turn composed of even smaller ones. Representation of such decomposition looks fine with describing the lifecycle of the subroutine as a sequence of actions. At in the concatenative paradigm, the juxtaposition of expressions denotes function composition.
 
 Imagine that you write the program as if writing plans for the day.
 
 ```js
-export default composite(
+export default sequence(
   wakeUp,
   washUp,
   warmUp,
@@ -55,7 +55,7 @@ If we go to the source of any item, for example to `haveBreakfast`, then we will
 
 ```js
 // haveBreakfast.js
-export default composite(
+export default sequence(
   cookScrambledEggs,
   squeezeOrangeJuice,
   setTheTable,
@@ -67,7 +67,7 @@ And `cookScrambledEggs` is:
 
 ```js
 // cookScrambledEggs.js
-export default composite(
+export default sequence(
   preheatAPan,
   takeTheEggs,
   breakEggs,
@@ -88,11 +88,11 @@ The flow, sequencing function calls, chaining, stream - close concepts.  Imagine
 Let start with simple composition.
 
 ```js
-import { composite } from 'decomposite';
+import { sequence } from 'decompose';
 
 const getHelloMessageByName = name => `Hello, ${name}!`;
 
-const logHello = composite(
+const logHello = sequence(
   getHelloMessageByName,
   console.log
 );
@@ -103,10 +103,10 @@ logHello('Composition');
 
 In this example I just concatenates two functions. First function `getHelloMessageByName` returns a string, second `console.log` displays it. Result of first function become argument for second.
 
-Let's abstract our eyes from the imperative logic and look at the composite function
+Let's abstract our eyes from the imperative logic and look at the sequence function
 
 ```js
-const logHello = composite(
+const logHello = sequence(
   getHelloMessageByName,
   console.log
 );
@@ -152,7 +152,7 @@ The logic of these functions is indivisible. It means that I can't decompose it 
 But now we can put it together and get code view more declarative.
 
 ```js
-import { composite } from 'decomposite';
+import { sequence } from 'decompose';
 import {
   eventToValue,
   validate,
@@ -160,7 +160,7 @@ import {
 } from 'src/logic'
 
 // Concatenating
-export default composite(
+export default sequence(
   eventToValue,         // Select value from event
   validate,             // Validate selected value
   notify,               // Notify if the value is invalid
@@ -197,7 +197,7 @@ _Stack_ is a collection of results of _words_ invokations. Each _word_ invocatio
 Look at example and follow comments to watch stack changes:
 
 ```js
-const randBool = composite(
+const randBool = sequence(
   Math.PI, // In: [], Out: [3.14159]
   Math.round, // In: [3.14159], Out: [3]
   Boolean, // In: [3], Out: [true]
@@ -214,7 +214,7 @@ Why we need stack? - you asking me. Because significant limitation of the concat
 For example, I want to create a function for converting user input in to a cubed value. To get cubed value, I should to call `Math.pow` with second argument equals `3`.
 
 ```js
-const onChange = composite(
+const onChange = sequence(
   Number,
   Math.pow, // By the default second parameter is 2, but we needs 3
   console.log,
@@ -232,7 +232,7 @@ __I. Encapsulation of call__
 Just create higher-level function, which call required function with needed arguments.
 
 ```js
-const onChange = composite(
+const onChange = sequence(
   Number,
   n => Math.pow(n, 3),
   console.log,
@@ -247,7 +247,7 @@ In concatenative languages, there is such thing as **Stack effect**. It is when 
 Thus, the only way to increase stack length is to forcenatly increase stack. It can be done with passing to the concatenate sequence an array instead a function.
 
 ```js
-const onChange = composite(
+const onChange = sequence(
   [3, Number],
   Math.pow,
   console.log,
@@ -269,7 +269,7 @@ __III. Use helpers__
 [mapArgs](docs/api.md#mapArgs) allows you force set arguments.
 
 ```js
-const getRandSquare = composite(
+const getRandSquare = sequence(
   mapArgs((val) => [Number(val), 3]),
   Math.pow,
 )
@@ -287,7 +287,7 @@ When I accepts initial arguments, first thing I must to do is map this arguments
 Manually:
 
 ```js
-composite(
+sequence(
   (a, b, c) => ({ a, b, c });
 )
 ```
@@ -295,7 +295,7 @@ composite(
 Or using special factory `zipProps`:
 
 ```js
-composite(
+sequence(
   zipProps(['a', 'b', 'c']),
 )
 ```
@@ -313,7 +313,7 @@ const mapValidateCardNumber = ({ e }) => ({
   valid: e.target.value.length == 16,
 })
 
-const onCardNumberChange = composite(
+const onCardNumberChange = sequence(
   zipProps('e'),
   mapValidateCardNumber,
   ({ e, valid }) => {

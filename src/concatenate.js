@@ -1,6 +1,7 @@
 import isNotProduction from 'is-not-production';
 import isArray from 'lodash/isArray';
 import isFunction from 'lodash/isFunction';
+import isObject from 'lodash/isObject';
 import { isFactory, getDisplayName } from './internals/helpers';
 import { RESOLVER, ONERROR } from './internals/constants';
 
@@ -8,11 +9,11 @@ export function defaultResolver(unit, stack, context) {
   return [unit.apply(context, stack.slice().reverse())];
 }
 
-function arrayUnitResolver(unit, stack) {
+function subUnitResolver(unit, stack) {
   if (isFunction(unit)) {
     return defaultResolver(unit, stack);
   }
-  return unit;
+  return [unit];
 }
 
 function resolveArray(unit, stack) {
@@ -21,9 +22,21 @@ function resolveArray(unit, stack) {
   }
   let nextStack = stack.slice();
   for (let i = 0; i < unit.length; i++) {
-    nextStack = nextStack.concat(arrayUnitResolver(unit[i], stack));
+    nextStack = nextStack.concat(subUnitResolver(unit[i], stack));
   }
   return nextStack;
+}
+
+function resolveObject(unit, stack) {
+  const keys = Object.keys(unit);
+  if (keys.length === 0) {
+    return stack;
+  }
+  const nextProps = {};
+  for (let i = 0; i < keys.length; i++) {
+    nextProps[keys[i]] = subUnitResolver(unit[keys[i]], stack).pop();
+  }
+  return [nextProps];
 }
 
 export function resolveUnit(unit, stack, context) {
@@ -31,6 +44,8 @@ export function resolveUnit(unit, stack, context) {
     return (unit[RESOLVER] || defaultResolver)(unit, stack, context);
   } else if (isArray(unit)) {
     return resolveArray(unit, stack);
+  } else if (isObject(unit)) {
+    return resolveObject(unit, stack);
   }
   return [unit];
 }

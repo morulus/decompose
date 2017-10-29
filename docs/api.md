@@ -4,13 +4,16 @@ Decompose API Reference
 # __0.1.0__
 
 * [Factory functions](#factory-functions)
-  + [`composite`](#composite) ([`concatenate`](#composite), [`f`](#composite))
+  + [`sequence`](#sequence) ([`concatenate`](#sequence), [`f`](#sequence))
   + [`tillTruly`](#tillTruly)
+  + [`whileTruly`](#whileTruly)
   + [`tillMatch`](#tillMatch)
   + [`branch`](#branch)
   + [`invoke`](#invoke)
   + [`zipProps`](#zipProps)
   + [`withProps`](#withProps)
+  + [`stub`](#stub)
+  + [`memoize`](#memoize)
 * [Helpers](#helpers)
   + [`fork`](#fork)
   + [`mapArgs`](#mapArgs)
@@ -23,10 +26,10 @@ Factory functions can be used separately from the flow. You are free to use it w
 
 ## `default`
 
-**ref**: `composite()`, `flow()`, `f()`
+**ref**: `sequence()`, `flow()`, `f()`
 
 ```
-composite(
+sequence(
   ...units: (function | array | any)
 ) : function
 ```
@@ -34,7 +37,7 @@ composite(
 Compose functions into a flow, where the result of the previous function becomes an argument for a next.
 
 ```js
-const logSum = composite(
+const logSum = sequence(
   (x, y) => x + y,
   sum => `Sum: ${sum}`,
   console.log
@@ -57,7 +60,7 @@ But you have the opportunity to increase the stack, thereby increasing the numbe
 Using an array, we can easily add additional data to the stack.
 
 ```js
-const logSum = composite(
+const logSum = sequence(
   // Initial stack is [3, 2]. Formed from arguments.
   [
     'A', 'B', 'C', 'D'
@@ -78,7 +81,7 @@ To better understand the principle of the stack, imagine that the stack is a dec
 The larger the stack, the more arguments will be passed to the next function.
 
 ```js
-composite(
+sequence(
   ['2', '4', '5', '6', '7', '8', '9', '10'],
   ['Jack', 'Queen', 'King', 'Ace'],
   (
@@ -104,7 +107,7 @@ composite(
 But, if the stream encounters a function, the stack is reset to zero and again takes on only one value.
 
 ```js
-composite(
+sequence(
   ['2', '4', '5', '6', '7', '8', '9', '10'],
   ['Jack', 'Queen', 'King', 'Ace'],
   () => 'Joker',
@@ -117,7 +120,7 @@ composite(
 However, the use of functions inside the array does not result in the zeroing of the current stack. You can use this for parallel calculations.
 
 ```js
-const onKeyDown = composite(
+const onKeyDown = sequence(
   [event => event.which === 13],
   (isEnter, event) => {
     if (isEnter) {
@@ -147,7 +150,7 @@ const validateValue = tillTruly(
   value => value.length > 20 && 'Value too big',
 );
 
-const onValueChange = composite(
+const onValueChange = sequence(
   validateValue,
   (message) => (
     message
@@ -161,6 +164,25 @@ onValueChange('Hello%World');
 onValueChange('Hello World');
 // console: 'Valid!'
 
+```
+
+## `whileTruly()`
+
+```js
+whileTruly(
+  ...fn: function
+) : function => any
+```
+
+Invokes passed functions in a flow, as long as they return truly value. Breaks the sequence if result falsy. Returns result of last called function.
+
+```js
+export const entitiesSelector = whileTruly(
+  state => state.db,
+  db => db.entities, // Will not be called
+);
+
+entitiesSelector({});
 ```
 
 ## `tillMatch()`
@@ -232,7 +254,7 @@ const resolveValidation = invoke((valid) => {
     : displayWarning;
 });
 
-const onFormSubmit = composite(
+const onFormSubmit = sequence(
   [validateForm],
   resolveValidation,
 )
@@ -259,7 +281,7 @@ Accepts a list of keys according to the order of the arguments. The result becom
 Use it to map initial arguments to props, when the [props-only technique](../README.md#props-only-technique) you were chosen.
 
 ```js
-const setUserName = composite(
+const setUserName = sequence(
   zipProps('firstName', 'lastName'),
   ({ firstName, lastName }) => {
     // Do something with props
@@ -276,7 +298,7 @@ setUserName('Vladimir', 'Morulus');
 Accepts function, that returns props, which will be merged with existing props.
 
 ```js
-const flow = composite(
+const flow = sequence(
   a => ({
     a,
   }),
@@ -298,6 +320,32 @@ const mapper = withProps({
 });
 ```
 
+## `stub()`
+
+`stub(value: any) : function => any`
+
+Proxies props if it is truly, returns specified value if it is falsy.
+
+```js
+const sub25 = stub(25);
+
+stub(null); // 25
+stub(0); // 25
+stub(15): // 15
+stub({}): // {}
+```
+
+## `memoize()`
+
+```
+memoize(
+  selector: function,
+  ?isEqual: function
+) : function => any
+```
+
+Invoke function only if arguments are not equaled previous call, Otherwise, returns cached result.
+
 # Helpers
 
 Helper is a util, which cannot be used separately from the concatenative flow. It allows you to get special flow features, that is unavailable by native functions.
@@ -309,7 +357,7 @@ Helper is a util, which cannot be used separately from the concatenative flow. I
 Invoke function without any effect on the custom flow.
 
 ```js
-composite(
+sequence(
   ['Hello'],
   fork(() => {
     return 'Bonjour';
@@ -326,7 +374,7 @@ composite(
 Allows you force set arguments.
 
 ```js
-const getSquare = composite(
+const getSquare = sequence(
   mapArgs((val) => [Number(val), 3]),
   Math.pow,
 )
@@ -343,7 +391,7 @@ Allows you to override the whole stack. Note that the order of array corresponds
 Add sync error handler. Allows you to continue the flow with a new value if current flow has thrown an error.
 
 ```js
-const flow = composite(
+const flow = sequence(
   1,
   () => { throw new Error(); },
   () => 2, // Skip
@@ -364,7 +412,7 @@ flow(); // 5
 Define async handler, and optional catch handler. Expects Promise on the edge of stack.
 
 ```js
-composite(
+sequence(
   Promise.resolve(2),
   then((payload) => {
     return payload * 2;
