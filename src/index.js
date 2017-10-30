@@ -37,11 +37,20 @@ const main = (...args) => composite(...args);
 
 Object.assign(main, {
   composite,
+  sequence,
   concatenate,
   withProps,
   tillTruly,
+  whileTruly,
+  stub,
+  memoize,
   invoke,
   fork,
+  mapArgs,
+  onError,
+  then,
+  tillMatch,
+  zipProps,
 });
 
 export default main;

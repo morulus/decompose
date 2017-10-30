@@ -1,10 +1,10 @@
-Decompose API Reference
+Sequ API Reference
 ==
 
 # __0.1.0__
 
 * [Factory functions](#factory-functions)
-  + [`sequence`](#sequence) ([`concatenate`](#sequence), [`f`](#sequence))
+  + [`sequence`](#sequence) ([`f`](#sequence))
   + [`tillTruly`](#tillTruly)
   + [`whileTruly`](#whileTruly)
   + [`tillMatch`](#tillMatch)

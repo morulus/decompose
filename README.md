@@ -1,4 +1,4 @@
-decompose
+Sequ
 ==
 
 -------
@@ -16,12 +16,12 @@ Provides an opportunity to plunge into logic decompositions, concatenative progr
 
 Install:
 ```shell
-yarn add decompose
+yarn add sequ
 ```
 
 Usage:
 ```js
-import { sequence } from 'decompose';
+import { sequence } from 'sequ';
 ```
 
 Theory
@@ -31,9 +31,9 @@ At the heart of the logic decomposition lies the life cycle, which naturally imp
 
 If the functional paradigm is designed to encapsulate complex logic, then reactive programming languages, concatenative programming languages - all pursue the goal of this logic decomposing.
 
-The goal is to make the code more intuitive, and the analysis easy. The oldest way to reduce complexity is to decompose.
+The goal is to make the code more intuitive, and the analysis easy. The oldest way to reduce complexity is to sequ.
 
-decompose logic is such logic, which was composed of smaller logics, which in turn composed of even smaller ones. Representation of such decomposition looks fine with describing the lifecycle of the subroutine as a sequence of actions. At in the concatenative paradigm, the juxtaposition of expressions denotes function composition.
+sequ logic is such logic, which was composed of smaller logics, which in turn composed of even smaller ones. Representation of such decomposition looks fine with describing the lifecycle of the subroutine as a sequence of actions. At in the concatenative paradigm, the juxtaposition of expressions denotes function composition.
 
 Imagine that you write the program as if writing plans for the day.
 
@@ -88,7 +88,7 @@ The flow, sequencing function calls, chaining, stream - close concepts.  Imagine
 Let start with simple composition.
 
 ```js
-import { sequence } from 'decompose';
+import { sequence } from 'sequ';
 
 const getHelloMessageByName = name => `Hello, ${name}!`;
 
@@ -120,7 +120,7 @@ function logHello(name) {
 }
 ```
 
-I agree that such simple logic doesn't need decompositions. But rich logic is more difficult to review in one piece. With concatenation, you can get the union of decomposed and more understandable logic.
+I agree that such simple logic doesn't need decompositions. But rich logic is more difficult to review in one piece. With concatenation, you can get the union of sequd and more understandable logic.
 
 For example, let's create an password change handler by composing few functions.
 
@@ -147,12 +147,12 @@ export function notify(message) {
 }
 ```
 
-The logic of these functions is indivisible. It means that I can't decompose it anymore. For this reason, it looks so imperative.
+The logic of these functions is indivisible. It means that I can't sequ it anymore. For this reason, it looks so imperative.
 
 But now we can put it together and get code view more declarative.
 
 ```js
-import { sequence } from 'decompose';
+import { sequence } from 'sequ';
 import {
   eventToValue,
   validate,
@@ -178,13 +178,13 @@ passwordInput.addEventListener(
 
 Now the code clearly shows composition of logic. We do not need to interpret the code in our brain to understand what the script does.
 
-**Logic is stored decomposed, but used in composition**. And **decomposed logic easy to test and reuse**.
+**Logic is stored sequd, but used in composition**. And **sequd logic easy to test and reuse**.
 
 
 Inspiration and principles
 --
 
-Originally *decompose* inspired by the [recompose](https://github.com/acdlite/recompose), but later I began to look for inspiration in the [concatenative (stack) languages](https://concatenative.org/wiki/view/Front%20Page) and [decomposition](https://en.wikipedia.org/wiki/Decomposition_(computer_science)), functional decomposition also.
+Originally *sequ* inspired by the [recompose](https://github.com/acdlite/recompose), but later I began to look for inspiration in the [concatenative (stack) languages](https://concatenative.org/wiki/view/Front%20Page) and [decomposition](https://en.wikipedia.org/wiki/Decomposition_(computer_science)), functional decomposition also.
 
 I focused on solving trouble with multiple arguments, which were not resolved in existing decisions. This tool is aimed to creating a sequence of function invocations, linked with each another by, so called, stack.
 
