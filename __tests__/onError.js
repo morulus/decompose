@@ -1,5 +1,5 @@
-import concatenate from '../src/concatenate';
-import onError from '../src/onError';
+import concatenate from '../lib/concatenate';
+import onError from '../lib/onError';
 
 describe('onError', () => {
   it('Catch error', () => {

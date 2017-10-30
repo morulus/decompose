@@ -1,5 +1,5 @@
-import concatenate from '../src/concatenate';
-import fork from '../src/fork';
+import concatenate from '../lib/concatenate';
+import fork from '../lib/fork.js';
 
 describe('fork', () => {
   it('Basic usage', () => {

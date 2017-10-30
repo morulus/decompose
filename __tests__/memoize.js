@@ -1,4 +1,4 @@
-import memoize from '../src/memoize';
+import memoize from '../lib/memoize';
 
 describe('memoize', () => {
   it('With nums', () => {

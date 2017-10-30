@@ -1,4 +1,4 @@
-import whileTruly from '../src/whileTruly';
+import whileTruly from '../lib/whileTruly';
 
 const decreaseValue = whileTruly(
   value => value - 1,

@@ -1,5 +1,5 @@
-import concatenate from '../src/concatenate';
-import branch from '../src/branch';
+import concatenate from '../lib/concatenate';
+import branch from '../lib/branch';
 
 describe('branch', () => {
   it('onTrue', () => {

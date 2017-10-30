@@ -1,4 +1,4 @@
-import stub from '../src/stub';
+import stub from '../lib/stub';
 
 const stub15 = stub(
   15,

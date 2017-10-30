@@ -1,5 +1,5 @@
-import concatenate from '../src/concatenate';
-import then from '../src/then';
+import concatenate from '../lib/concatenate';
+import then from '../lib/then';
 
 describe('then', () => {
   it('With promise', () => {

@@ -1,4 +1,4 @@
-import concatenate from '../src/concatenate';
+import concatenate from '../lib/concatenate';
 
 describe('STANDART-1', () => {
   // Stack passes to args in reverse order

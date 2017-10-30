@@ -1,5 +1,5 @@
-import concatenate from '../src/concatenate';
-import invoke from '../src/invoke';
+import concatenate from '../lib/concatenate';
+import invoke from '../lib/invoke';
 
 describe('invoke', () => {
   it('Basic usage', () => {

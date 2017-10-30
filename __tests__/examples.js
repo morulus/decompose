@@ -1,4 +1,4 @@
-import concatenate from '../src/concatenate';
+import concatenate from '../lib/concatenate';
 
 describe('Exemples', () => {
   it('Random PIN', () => {

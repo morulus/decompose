@@ -1,5 +1,5 @@
-import concatenate from '../src/concatenate';
-import tillTruly from '../src/tillTruly';
+import concatenate from '../lib/concatenate';
+import tillTruly from '../lib/tillTruly';
 
 const validateValue = tillTruly(
   value => value.length < 5 && 'Value too short',

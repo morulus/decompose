@@ -1,5 +1,5 @@
-import concatenate from '../src/concatenate';
-import tillMatch from '../src/tillMatch';
+import concatenate from '../lib/concatenate';
+import tillMatch from '../lib/tillMatch';
 
 const getQuota = tillMatch(
   [

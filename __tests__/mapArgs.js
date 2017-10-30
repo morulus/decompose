@@ -1,5 +1,5 @@
-import concatenate from '../src/concatenate';
-import mapArgs from '../src/mapArgs';
+import concatenate from '../lib/concatenate';
+import mapArgs from '../lib/mapArgs';
 
 describe('mapArgs', () => {
   it('Basic usage', () => {

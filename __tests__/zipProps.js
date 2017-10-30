@@ -1,5 +1,5 @@
-import concatenate from '../src/concatenate';
-import zipProps from '../src/zipProps';
+import concatenate from '../lib/concatenate';
+import zipProps from '../lib/zipProps';
 
 describe('zipProps', () => {
   it('Basic usage', () => {

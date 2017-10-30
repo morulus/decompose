@@ -1,4 +1,4 @@
-import withProps from '../src/withProps';
+import withProps from '../lib/withProps';
 
 describe('withProps', () => {
   it('Basic usage', () => {

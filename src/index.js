@@ -15,24 +15,6 @@ import zipProps from './zipProps';
 const composite = concatenate;
 const sequence = concatenate;
 
-export {
-  composite,
-  sequence,
-  concatenate,
-  withProps,
-  tillTruly,
-  whileTruly,
-  stub,
-  memoize,
-  invoke,
-  fork,
-  mapArgs,
-  onError,
-  then,
-  tillMatch,
-  zipProps,
-};
-
 const main = (...args) => composite(...args);
 
 Object.assign(main, {
