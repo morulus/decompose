@@ -33,7 +33,7 @@ If the functional paradigm is designed to encapsulate complex logic, then reacti
 
 The goal is to make the code more intuitive, and the analysis easy. The oldest way to reduce complexity is to sequ.
 
-sequ logic is such logic, which was composed of smaller logics, which in turn composed of even smaller ones. Representation of such decomposition looks fine with describing the lifecycle of the subroutine as a sequence of actions. At in the concatenative paradigm, the juxtaposition of expressions denotes function composition.
+Decomposite logic is such logic, which was composed of smaller logics, which in turn composed of even smaller ones. Representation of such decomposition looks fine with describing the lifecycle of the subroutine as a sequence of actions. At in the concatenative paradigm, the juxtaposition of expressions denotes function composition.
 
 Imagine that you write the program as if writing plans for the day.
 
