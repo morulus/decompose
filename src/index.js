@@ -11,6 +11,7 @@ import onError from './onError';
 import then from './then';
 import tillMatch from './tillMatch';
 import zipProps from './zipProps';
+import branch from './branch';
 
 const composite = concatenate;
 const sequence = concatenate;
@@ -35,6 +36,7 @@ Object.assign(main, {
   then,
   tillMatch,
   zipProps,
+  branch,
 });
 
 export default main;
