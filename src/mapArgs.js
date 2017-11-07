@@ -1,5 +1,4 @@
-import isArray from 'lodash/isArray';
-import { defFactory } from './internals/helpers';
+import { defFactory, isArray } from './internals/helpers';
 
 function stackApplier(unit, stack, context) {
   const nextStack = unit.apply(context, stack.slice().reverse());

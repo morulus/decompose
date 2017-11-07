@@ -1,8 +1,5 @@
 import isNotProduction from 'is-not-production';
-import isArray from 'lodash/isArray';
-import isFunction from 'lodash/isFunction';
-import isObject from 'lodash/isObject';
-import { isFactory, getDisplayName } from './internals/helpers';
+import { isObject, isFunction, isArray, isFactory, getDisplayName } from './internals/helpers';
 import { RESOLVER, ONERROR } from './internals/constants';
 
 export function defaultResolver(unit, stack, context) {

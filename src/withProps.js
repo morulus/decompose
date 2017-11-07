@@ -1,9 +1,6 @@
 import isNotProduction from 'is-not-production';
-import isObject from 'lodash/isObject';
-import isNil from 'lodash/isNil';
-import isFunction from 'lodash/isFunction';
-import isObjectLike from 'lodash/isObjectLike';
 import warning from 'warning';
+import { isObject, isNil, isFunction } from './internals/helpers';
 
 function objectToTransformer(object) {
   return () => object;
@@ -13,7 +10,7 @@ export default function withProps(propsCreator) {
   const propsCreatorIsFunction = isFunction(propsCreator);
   if (isNotProduction) {
     warning(
-      propsCreatorIsFunction || isObjectLike(propsCreator),
+      propsCreatorIsFunction || isObject(propsCreator),
       'withProps expects a function or object',
     );
   }

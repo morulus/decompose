@@ -1,6 +1,5 @@
 import warning from 'warning';
-import isFunction from 'lodash/isFunction';
-import { defFactory } from './internals/helpers';
+import { defFactory, isFunction } from './internals/helpers';
 
 /**
  * Invoke function taked from result

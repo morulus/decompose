@@ -1,6 +1,4 @@
-import isFunction from 'lodash/isFunction';
-import isArray from 'lodash/isArray';
-import { defFactory } from './internals/helpers';
+import { defFactory, isFunction, isArray } from './internals/helpers';
 
 /**
  * Invoke function taked from result

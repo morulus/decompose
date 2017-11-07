@@ -1,6 +1,4 @@
-import isFunction from 'lodash/isFunction';
-import isArray from 'lodash/isArray';
-import keys from 'lodash/keys';
+import { isFunction, isArray, keys } from './internals/helpers';
 
 function defaultOnFail() {
   return undefined;
