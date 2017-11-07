@@ -1,6 +1,6 @@
 {
   "name": "sequ",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Functional decomposition in action",
   "main": "lib/index.js",
   "scripts": {
