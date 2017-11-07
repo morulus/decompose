@@ -266,7 +266,7 @@ Using this construction, you can declare any number of additional arguments. But
 
 __III. Use helpers__
 
-[mapArgs](docs/api.md#mapArgs) allows you force set arguments.
+[mapArgs](https://github.com/morulus/sequ/blob/master/docs/api.md) allows you force set arguments.
 
 ```js
 const getRandSquare = sequence(

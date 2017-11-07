@@ -1,10 +1,10 @@
 Sequ API Reference
 ==
 
-# __0.1.0__
+# __0.1.4__
 
 * [Factory functions](#factory-functions)
-  + [`sequence`](#sequence) ([`f`](#sequence))
+  + [`sequence`](#sequence) ([`sequ`](#sequence), [`f`](#sequence))
   + [`tillTruly`](#tillTruly)
   + [`whileTruly`](#whileTruly)
   + [`tillMatch`](#tillMatch)
