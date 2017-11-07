@@ -14,12 +14,14 @@ import zipProps from './zipProps';
 
 const composite = concatenate;
 const sequence = concatenate;
+const sequ = concatenate;
 
 const main = (...args) => composite(...args);
 
 Object.assign(main, {
   composite,
   sequence,
+  sequ,
   concatenate,
   withProps,
   tillTruly,
