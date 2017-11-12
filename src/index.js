@@ -16,6 +16,7 @@ import branch from './branch';
 const composite = concatenate;
 const sequence = concatenate;
 const sequ = concatenate;
+const seq = concatenate;
 
 const main = (...args) => composite(...args);
 
@@ -23,6 +24,7 @@ Object.assign(main, {
   composite,
   sequence,
   sequ,
+  seq,
   concatenate,
   withProps,
   tillTruly,

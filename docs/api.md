@@ -26,7 +26,7 @@ Factory functions can be used separately from the flow. You are free to use it w
 
 ## `default`
 
-**ref**: `sequence()`, `flow()`, `f()`
+**ref**: `sequence()`, `sequ()`, `seq()`
 
 ```
 sequence(
